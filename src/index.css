@@ -1,0 +1,78 @@
+:root {
+  --purple-main: #5d28ce;
+  --purple-dark: #2B1C6D;
+  --purple-light: #F3E8FF;
+  --bg-gradient: #F8F6FF;
+}
+
+body {
+  background-color: var(--bg-gradient);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.text-purple { color: var(--purple-main); }
+.bg-purple { background-color: var(--purple-dark); }
+.bg-purple-light { background-color: var(--purple-light); }
+
+.btn-purple {
+  background-color: var(--purple-main);
+  color: white;
+  border: none;
+}
+.btn-purple:hover {
+  background-color: #4a1eb0;
+  color: white;
+}
+
+.btn-purple-outline {
+  border: 1.5px solid var(--purple-main);
+  color: var(--purple-main);
+  background: transparent;
+}
+.btn-purple-outline:hover {
+  background-color: var(--purple-main);
+  color: white;
+}
+
+.active-tab {
+  background-color: var(--purple-main) !important;
+  color: white !important;
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, #FFFFFF 0%, #6e4cbc 100%);
+}
+
+.avatar-circle {
+  width: 42px;
+  height: 42px;
+  background-color: var(--purple-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.module-img {
+  height: 140px;
+  object-fit: cover;
+}
+
+/* Círculo interactivo de Score */
+.progress-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inner-circle {
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
