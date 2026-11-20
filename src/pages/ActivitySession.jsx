@@ -96,7 +96,11 @@ export default function ActivitySession() {
             ) : (
               <FinalTest
                 activityData={activity}
-                onComplete={() => navigate('/')}
+                onComplete={(score) => {
+                  const normalizedScore =
+                    typeof score === 'number' ? Math.min(100, Math.round(score * 2)) : 0;
+                  handleActivityComplete(normalizedScore);
+                }}
               />
             )
           ) : isModule3 ? (
@@ -266,14 +270,23 @@ export default function ActivitySession() {
             <i className="bi bi-check-circle-fill"></i>
           </div>
           <h3 className="fw-bold text-dark">Activity Completed Successfully!</h3>
-          <p className="text-muted mb-4">
-            Your score has been saved.{typeof lastScore === 'number' ? ` (${lastScore} pts)` : ''}
+          <p className="text-muted mb-2">
+            Your score has been saved.
           </p>
+          {typeof lastScore === 'number' && (
+            <div className="display-6 fw-bold mb-4" style={{ color: '#6C4AB6' }}>
+              Score: {lastScore}%
+            </div>
+          )}
           <button 
-            onClick={handleNextActivity}
+            onClick={() => (isModule4 ? navigate('/evaluation') : handleNextActivity())}
             className="btn btn-purple btn-lg rounded-pill px-5 fw-semibold"
           >
-            {currentStepIndex < steps.length - 1 ? 'Next Activity ➔' : 'View Final Evaluation 🏆'}
+            {isModule4
+              ? 'View General Evaluation 🏆'
+              : currentStepIndex < steps.length - 1
+              ? 'Next Activity ➔'
+              : 'View Final Evaluation 🏆'}
           </button>
         </div>
       )}
