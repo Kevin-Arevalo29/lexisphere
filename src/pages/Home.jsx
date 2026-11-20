@@ -9,27 +9,13 @@ export default function Home() {
     <div>
       {/* Banner Hero */}
       <div className="card border-0 rounded-4 p-4 p-md-5 mb-5 hero-banner position-relative overflow-hidden">
-        <div className="row align-items-center">
-          <div className="col-md-7 z-1">
-            <h1 className="display-4 fw-bold mb-2" style={{ color: '#1E1248' }}>LexiSphere</h1>
-            <h4 className="fw-bold mb-3" style={{ color: '#5f34ba' }}>Learn. Practice. Communicate.</h4>
-            <p className="text-muted fs-5 mb-4 max-w-400">
+        <div className="hero-banner-content d-flex align-items-center justify-content-center text-center">
+          <div className="mx-auto">
+            <h1 className="hero-title display-4 fw-bold mb-2" style={{ color: '#1E1248' }}>LexiSphere</h1>
+            <h4 className="hero-tagline fw-bold mb-3" style={{ color: '#5f34ba' }}>Learn. Practice. Communicate.</h4>
+            <p className="hero-description text-muted fs-5 mb-0 mx-auto" style={{ maxWidth: '700px' }}>
               Expand your English vocabulary with interactive activities and real-life topics.
             </p>
-            <button 
-              onClick={() => navigate('/modules')}
-              className="btn btn-purple btn-lg rounded-pill px-4 py-2 fw-semibold"
-            >
-              Start Learning <i className="bi bi-arrow-right ms-2"></i>
-            </button>
-          </div>
-          <div className="col-md-5 text-center position-relative mt-4 mt-md-0">
-            <div className="globe-illustration mx-auto">
-              <i className="bi bi-globe-americas display-1 text-primary"></i>
-              <div className="speech-bubble shadow-sm">
-                <span>Let's learn together!</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

@@ -8,12 +8,8 @@ export default function ListeningActivityM3({ activityData, onComplete }) {
   const [timerActive, setTimerActive] = useState(false);
   const [timeSpent, setTimeSpent] = useState({ minutes: 0, seconds: 0 });
 
-  // =========================================================================
-  // <--- COLOCA AQUÍ LA RUTA DE TU AUDIO --->
-  // Ejemplo si está en public/audio/: "/audio/AUDIO 3 - SOCIETY LISTENING.ogg"
-  // O importa el archivo arriba: import societyAudio from '../../../assets/...'
-  // =========================================================================
-  const AUDIO_SRC = "../../../../public/audio/AUDIO 3 - SOCIETY LISTENING.ogg";
+  
+const AUDIO_SRC = "/audio/society-listening.ogg";
 
   useEffect(() => {
     let interval = null;
@@ -289,32 +285,31 @@ export default function ListeningActivityM3({ activityData, onComplete }) {
       )}
 
       {/* REPRODUCTOR DE AUDIO FIJO DURANTE PART 2 Y PART 3 */}
-      {step !== 'intro' && step !== 'results' && (
-        <div
-          className="p-4 rounded-4 mb-4 shadow-sm border text-center"
-          style={{ backgroundColor: '#F8F7FC', borderColor: '#DDD6FE' }}
-        >
-          <span
-            className="badge rounded-pill px-3 py-1 fw-bold mb-2"
-            style={{ backgroundColor: '#EDE9FE', color: '#6C4AB6' }}
-          >
-            Part 1 · Audio Player
-          </span>
-          <h5 className="fw-bold mb-1" style={{ color: '#1E1248' }}>
-            <i className="bi bi-volume-up-fill me-2" style={{ color: '#6C4AB6' }}></i>
-            The Society We Want to Build
-          </h5>
-          <p className="text-muted small mb-3">
-            Podcast · Social Issues · Community and Equality (No transcript available)
-          </p>
+{step !== 'intro' && step !== 'results' && (
+  <div
+    className="p-4 rounded-4 mb-4 shadow-sm border text-center"
+    style={{ backgroundColor: '#F8F7FC', borderColor: '#DDD6FE' }}
+  >
+    <span
+      className="badge rounded-pill px-3 py-1 fw-bold mb-2"
+      style={{ backgroundColor: '#EDE9FE', color: '#6C4AB6' }}
+    >
+      Part 1 · Audio Player
+    </span>
+    <h5 className="fw-bold mb-1" style={{ color: '#1E1248' }}>
+      <i className="bi bi-volume-up-fill me-2" style={{ color: '#6C4AB6' }}></i>
+      The Society We Want to Build
+    </h5>
+    <p className="text-muted small mb-3">
+      Podcast · Social Issues · Community and Equality (No transcript available)
+    </p>
 
-          {/* <--- COLOCA AQUÍ LA RUTA DE TU AUDIO ---> */}
-          <audio controls className="w-100 mx-auto d-block" style={{ maxWidth: '540px' }}>
-            <source src={AUDIO_SRC} type="audio/ogg" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-      )}
+    <audio controls className="w-100 mx-auto d-block" style={{ maxWidth: '540px' }}>
+      <source src={AUDIO_SRC} type="audio/ogg" />
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+)}
 
       {/* ========================================== */}
       {/* PARTE 2: LISTENING COMPREHENSION           */}

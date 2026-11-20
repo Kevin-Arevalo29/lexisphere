@@ -20,12 +20,6 @@ export default function Navbar() {
               <i className="bi bi-house-door-fill me-1"></i> Home
             </NavLink>
             <NavLink 
-              to="/modules" 
-              className={({ isActive }) => `nav-link px-3 rounded-pill fw-semibold ${isActive ? 'active-tab' : 'text-secondary'}`}
-            >
-              <i className="bi bi-grid-fill me-1"></i> Modules
-            </NavLink>
-            <NavLink 
               to="/evaluation" 
               className={({ isActive }) => `nav-link px-3 rounded-pill fw-semibold ${isActive ? 'active-tab' : 'text-secondary'}`}
             >

@@ -177,19 +177,20 @@ export default function ListeningActivityM2({ activityData, onComplete }) {
       )}
 
       {/* REPRODUCTOR DE AUDIO FIJO */}
-      {step !== 'intro' && step !== 'results' && (
-        <div className="p-4 rounded-4 bg-light border mb-4 shadow-sm text-center">
-          <h5 className="fw-bold text-purple mb-3">
-            <i className="bi bi-headphones me-2"></i> The Environmental Podcast Audio
-          </h5>
-          <audio controls className="w-100" style={{ maxWidth: '500px' }}>
-            <source src="../../../../public/audio/AUDIO 2 - ENVIRONMENT LISTENING.ogg" type="audio/ogg" />
-            Your browser does not support the audio element.
-          </audio>
-          <small className="text-muted d-block mt-2">You can replay the audio as many times as you need.</small>
-        </div>
-      )}
-
+{step !== 'intro' && step !== 'results' && (
+  <div className="p-4 rounded-4 bg-light border mb-4 shadow-sm text-center">
+    <h5 className="fw-bold text-purple mb-3">
+      <i className="bi bi-headphones me-2"></i> The Environmental Podcast Audio
+    </h5>
+    <audio controls className="w-100" style={{ maxWidth: '500px' }}>
+      <source src="/audio/environment-listening.ogg" type="audio/ogg" />
+      Your browser does not support the audio element.
+    </audio>
+    <small className="text-muted d-block mt-2">
+      You can replay the audio as many times as you need.
+    </small>
+  </div>
+)}
       {/* ========================================== */}
       {/* PARTE 1: COMPLETAR ORACIONES */}
       {/* ========================================== */}
