@@ -39,35 +39,46 @@ export default function Modules() {
         </div>
       </div>
 
-      {/* Tarjetas de 4 Actividades */}
-      <h4 className="fw-bold text-center mb-4" style={{ color: '#1E1248' }}>Activities</h4>
-      <div className="row g-4 mb-4">
-        {Object.entries(currentModule.activities).map(([key, act]) => (
-          <div className="col-12 col-sm-6 col-md-3" key={key}>
-            <div className="card border-0 shadow-sm rounded-4 text-center p-3 h-100 bg-white activity-card">
-              <div className="icon-wrapper mx-auto mb-3" style={{ color: activityIcons[key].color }}>
-                <i className={`bi ${activityIcons[key].icon} fs-1`}></i>
+      {currentModule.id === 'economy' ? (
+        <div className="text-center py-4">
+          <button
+            onClick={() => navigate(`/modules/${currentModule.id}/reading`)}
+            className="btn btn-purple btn-lg rounded-pill px-5 py-3 fw-semibold shadow-sm"
+          >
+            Take a final test <i className="bi bi-arrow-right ms-2"></i>
+          </button>
+        </div>
+      ) : (
+        <>
+          {/* Tarjetas de 4 Actividades */}
+          <h4 className="fw-bold text-center mb-4" style={{ color: '#1E1248' }}>Activities</h4>
+          <div className="row g-4 mb-4">
+            {Object.entries(currentModule.activities).map(([key, act]) => (
+              <div className="col-12 col-sm-6 col-md-3" key={key}>
+                <div className="card border-0 shadow-sm rounded-4 text-center p-3 h-100 bg-white activity-card">
+                  <div className="icon-wrapper mx-auto mb-3" style={{ color: activityIcons[key].color }}>
+                    <i className={`bi ${activityIcons[key].icon} fs-1`}></i>
+                  </div>
+                  <h5 className="fw-bold" style={{ color: '#1E1248' }}>{act.title}</h5>
+                  <p className="text-muted small mb-4">{act.desc}</p>
+                  <button
+                    onClick={() => navigate(`/modules/${currentModule.id}/${key}`)}
+                    className="btn btn-purple rounded-pill px-4 mt-auto fw-semibold"
+                  >
+                    Start <i className="bi bi-arrow-right ms-1"></i>
+                  </button>
+                </div>
               </div>
-              <h5 className="fw-bold" style={{ color: '#1E1248' }}>{act.title}</h5>
-              <p className="text-muted small mb-4">{act.desc}</p>
-              
-              {/* Botón Start con el evento onClick conectado */}
-              <button 
-                onClick={() => navigate(`/modules/${currentModule.id}/${key}`)}
-                className="btn btn-purple rounded-pill px-4 mt-auto fw-semibold"
-              >
-                Start <i className="bi bi-arrow-right ms-1"></i>
-              </button>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {/* Banner inferior de navegación a evaluación */}
-      <div className="bg-purple-light p-3 rounded-4 text-center d-flex align-items-center justify-content-center gap-2">
-        <i className="bi bi-trophy-fill text-warning fs-5"></i>
-        <span className="fw-semibold text-purple">Complete all activities and take the final evaluation!</span>
-      </div>
+          {/* Banner inferior de navegación a evaluación */}
+          <div className="bg-purple-light p-3 rounded-4 text-center d-flex align-items-center justify-content-center gap-2">
+            <i className="bi bi-trophy-fill text-warning fs-5"></i>
+            <span className="fw-semibold text-purple">Complete all activities and take the final evaluation!</span>
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -43,9 +43,9 @@ export const modulesData = [
   },
   {
     id: 'economy',
-    title: 'Economy',
-    subtitle: 'Master financial vocabulary and markets!',
-    image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=500&auto=format&fit=crop',
+    title: 'Final Test',
+    subtitle: '',
+    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&auto=format&fit=crop',
     score: 78,
     status: 'In Progress',
     activities: {

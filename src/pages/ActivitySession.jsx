@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { modulesData } from '../data/modulesData';
+import { saveActivityProgress } from '../utils/evaluationStorage';
 
 // Importaciones Módulo 1 (Social Media & Technology)
 import ReadingM1 from '../components/activities/modulo1/ReadingActivity';
+import ListeningM1 from '../components/activities/modulo1/ListeningActivity';
 import SpeakingM1 from '../components/activities/modulo1/SpeakingActivity';
 import WritingM1 from '../components/activities/modulo1/WritingActivity';
 
@@ -19,6 +21,10 @@ import ListeningActivityM3 from '../components/activities/modulo3/ListeningActiv
 import SpeakingActivityM3 from '../components/activities/modulo3/SpeakingActivityM3';
 import WritingActivityM3 from '../components/activities/modulo3/WritingActivityM3';
 
+// Importaciones de Modulo 4 (Final Evaluation / Final Test)
+import FinalTest from '../components/activities/modulo4/FinalTest';
+import EvaluationModule from '../components/activities/modulo4/EvaluationModule';
+
 export default function ActivitySession() {
   const { moduleId, activityType } = useParams();
   const navigate = useNavigate();
@@ -30,6 +36,23 @@ export default function ActivitySession() {
   const currentStepIndex = steps.indexOf(activityType);
 
   const [completed, setCompleted] = useState(false);
+  const [lastScore, setLastScore] = useState(null);
+
+  const recordCompletion = (score) => {
+    const isPending = score === null || score === undefined;
+    saveActivityProgress({
+      moduleId: moduleId || module?.id,
+      activityType,
+      score: isPending ? null : score,
+      pending: isPending
+    });
+  };
+
+  const handleActivityComplete = (score) => {
+    recordCompletion(score);
+    setLastScore(score);
+    setCompleted(true);
+  };
 
   const handleNextActivity = () => {
     if (currentStepIndex < steps.length - 1) {
@@ -44,40 +67,77 @@ export default function ActivitySession() {
   const modIdStr = String(moduleId).toLowerCase();
   const modTitleStr = String(module?.title).toLowerCase();
 
+  const isModule4 =
+    modIdStr.includes('4') ||
+    modIdStr.includes('economy') ||
+    modIdStr.includes('final') ||
+    modTitleStr.includes('4') ||
+    modTitleStr.includes('economy') ||
+    modTitleStr.includes('final');
   const isModule3 = modIdStr.includes('3') || modIdStr.includes('society') || modTitleStr.includes('society') || modTitleStr.includes('fairer');
   const isModule2 = modIdStr.includes('2') || modIdStr.includes('env') || modTitleStr.includes('environment') || modTitleStr.includes('plastic');
+
+  const isEvaluationSection =
+    activityType === 'evaluation' ||
+    modIdStr.includes('evaluation') ||
+    modTitleStr.includes('evaluation');
 
   return (
     <div>
       {!completed ? (
         <div>
-          {/* --- MÓDULO 3 (BUILDING A FAIRER SOCIETY) --- */}
-          {isModule3 ? (
+          {/* --- MÓDULO 4 (FINAL TEST / FINAL EVALUATION) --- */}
+          {isModule4 ? (
+            isEvaluationSection ? (
+              <EvaluationModule
+                activityData={activity}
+                onComplete={handleActivityComplete}
+              />
+            ) : (
+              <FinalTest
+                activityData={activity}
+                onComplete={() => navigate('/')}
+              />
+            )
+          ) : isModule3 ? (
+            /* --- MÓDULO 3 (BUILDING A FAIRER SOCIETY) --- */
             <>
               {activityType === 'reading' && (
                 <ReadingActivityM3 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? 100);
+                    setCompleted(true);
+                  }} 
                 />
               )}
 
               {activityType === 'listening' && (
                 <ListeningActivityM3 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? 100);
+                    setCompleted(true);
+                  }} 
                 />
               )}
 
               {activityType === 'speaking' && (
                 <SpeakingActivityM3 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? null);
+                    setCompleted(true);
+                  }} 
                 />
               )}
                {activityType === 'writing' && (
                 <WritingActivityM3 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? null);
+                    setCompleted(true);
+                  }} 
                 />
               )}
               {/* Si luego agregas listening, speaking o writing para el Módulo 3, van aquí */}
@@ -86,7 +146,10 @@ export default function ActivitySession() {
                   <h3 className="fw-bold text-dark">{activity.title}</h3>
                   <p className="text-muted">{activity.desc}</p>
                   <button 
-                    onClick={() => setCompleted(true)}
+                    onClick={() => {
+                      recordCompletion(100);
+                      setCompleted(true);
+                    }}
                     className="btn btn-purple rounded-pill px-4 py-2 mt-3 fw-semibold mx-auto"
                   >
                     Complete Activity <i className="bi bi-check2 ms-1"></i>
@@ -100,28 +163,40 @@ export default function ActivitySession() {
               {activityType === 'reading' && (
                 <ReadingActivityM2 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? 100);
+                    setCompleted(true);
+                  }} 
                 />
               )}
 
               {activityType === 'listening' && (
                 <ListeningActivityM2 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? 100);
+                    setCompleted(true);
+                  }} 
                 />
               )}
 
               {activityType === 'speaking' && (
                 <SpeakingActivityM2 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? null);
+                    setCompleted(true);
+                  }} 
                 />
               )}
 
               {activityType === 'writing' && (
                 <WritingActivityM2 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? null);
+                    setCompleted(true);
+                  }} 
                 />
               )}
             </>
@@ -131,21 +206,39 @@ export default function ActivitySession() {
               {activityType === 'reading' && (
                 <ReadingM1 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? 100);
+                    setCompleted(true);
+                  }} 
                 />
+              )}
+              {activityType === 'listening' && (
+                <ListeningM1
+                  activityData={activity}
+                  onComplete={(score) => {
+                    recordCompletion(score ?? 100);
+                    setCompleted(true);
+                  }}
+                /> 
               )}
 
               {activityType === 'speaking' && (
                 <SpeakingM1 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? null);
+                    setCompleted(true);
+                  }} 
                 />
               )}
 
               {activityType === 'writing' && (
                 <WritingM1 
                   activityData={activity} 
-                  onComplete={(score) => setCompleted(true)} 
+                  onComplete={(score) => {
+                    recordCompletion(score ?? null);
+                    setCompleted(true);
+                  }} 
                 />
               )}
 
@@ -154,7 +247,10 @@ export default function ActivitySession() {
                   <h3 className="fw-bold text-dark">{activity.title}</h3>
                   <p className="text-muted">{activity.desc}</p>
                   <button 
-                    onClick={() => setCompleted(true)}
+                    onClick={() => {
+                      recordCompletion(100);
+                      setCompleted(true);
+                    }}
                     className="btn btn-purple rounded-pill px-4 py-2 mt-3 fw-semibold mx-auto"
                   >
                     Complete Activity <i className="bi bi-check2 ms-1"></i>
@@ -170,7 +266,9 @@ export default function ActivitySession() {
             <i className="bi bi-check-circle-fill"></i>
           </div>
           <h3 className="fw-bold text-dark">Activity Completed Successfully!</h3>
-          <p className="text-muted mb-4">Your score has been saved.</p>
+          <p className="text-muted mb-4">
+            Your score has been saved.{typeof lastScore === 'number' ? ` (${lastScore} pts)` : ''}
+          </p>
           <button 
             onClick={handleNextActivity}
             className="btn btn-purple btn-lg rounded-pill px-5 fw-semibold"
