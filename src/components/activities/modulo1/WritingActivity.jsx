@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 export default function WritingActivity({ activityData, onComplete }) {
   const [step, setStep] = useState('intro'); // 'intro', 'write', 'results'
+  const [showVocabularySidebar, setShowVocabularySidebar] = useState(false);
   
   // --- TEMPORIZADOR (20 minutos = 1200 segundos) ---
   const [timeLeft, setTimeLeft] = useState(1200);
@@ -43,6 +44,45 @@ export default function WritingActivity({ activityData, onComplete }) {
     'Screen time', 'Misinformation', 'Online harassment', 
     'Data protection', 'Digital well-being'
   ];
+
+  // Tabla y contenido de vocabulario desplegable
+  const vocabularyItems = [
+    { expression: 'Misleading content', meaning: 'Information that gives a false impression.' },
+    { expression: 'To circulate', meaning: 'To spread or move from person to person.' },
+    { expression: 'To amplify', meaning: 'To increase the reach or impact of something.' },
+    { expression: 'Engagement-driven', meaning: "Influenced by users' online interactions." },
+    { expression: 'To trace the source', meaning: 'To identify where information originated.' },
+    { expression: 'Credibility', meaning: 'The quality of being trustworthy.' },
+    { expression: 'Repost', meaning: 'To share previously published content again.' },
+    { expression: 'Digital literacy', meaning: 'The ability to evaluate digital information.' }
+  ];
+
+  const VocabularyReferenceContent = () => (
+    <div className="d-flex flex-column gap-3">
+      <div className="table-responsive border rounded-3 bg-white">
+        <table className="table table-sm mb-0 align-middle">
+          <thead className="table-light">
+            <tr>
+              <th className="py-2 px-3 small fw-bold text-dark">Expression</th>
+              <th className="py-2 px-3 small fw-bold text-dark">Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            {vocabularyItems.map((item, idx) => (
+              <tr key={idx}>
+                <td className="py-2 px-3 small fw-semibold text-dark">{item.expression}</td>
+                <td className="py-2 px-3 small text-muted">{item.meaning}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="p-3 rounded-3 border bg-light small text-dark" style={{ lineHeight: '1.5' }}>
+        <strong>Extra interactive challenge:</strong> The student listens to short extracts from the audio and selects the vocabulary expression that best completes each one.
+      </div>
+    </div>
+  );
 
   // Control de palabras
   const handleContentChange = (e) => {
@@ -112,9 +152,19 @@ export default function WritingActivity({ activityData, onComplete }) {
       {/* 1. INTRODUCCIÓN */}
       {step === 'intro' && (
         <div className="mx-auto text-center" style={{ maxWidth: '900px' }}>
-          <span className="badge bg-purple-light text-purple px-3 py-2 rounded-pill fw-bold mb-2">
-            B2 Writing Challenge
-          </span>
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <span className="badge bg-purple-light text-purple px-3 py-2 rounded-pill fw-bold">
+              B2 Writing Challenge
+            </span>
+            <button
+              type="button"
+              onClick={() => setShowVocabularySidebar(true)}
+              className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+              style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+            >
+              <i className="bi bi-translate"></i> Vocabulary
+            </button>
+          </div>
           <h2 className="fw-bold mb-3" style={{ color: '#1E1248' }}>MY DIGITAL SURVIVAL GUIDE</h2>
           <p className="text-muted fs-5 fst-italic mb-4">Create a healthier and safer digital environment</p>
 
@@ -150,9 +200,19 @@ export default function WritingActivity({ activityData, onComplete }) {
               <span className="badge bg-purple-light text-purple px-3 py-1 rounded-pill fw-bold">Step 2: Write Your Guide</span>
               <h3 className="fw-bold text-dark mt-1 mb-0">Digital Survival Guide Production</h3>
             </div>
-            <span className={`badge ${wordCount >= 150 && wordCount <= 180 ? 'bg-success' : 'bg-warning text-dark'}`}>
-              {wordCount} / 150–180 words
-            </span>
+            <div className="d-flex align-items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowVocabularySidebar(true)}
+                className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+                style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+              >
+                <i className="bi bi-translate"></i> Vocabulary
+              </button>
+              <span className={`badge ${wordCount >= 150 && wordCount <= 180 ? 'bg-success' : 'bg-warning text-dark'}`}>
+                {wordCount} / 150–180 words
+              </span>
+            </div>
           </div>
 
           {/* Título de la guía */}
@@ -215,6 +275,33 @@ export default function WritingActivity({ activityData, onComplete }) {
             </button>
           </div>
         </div>
+      )}
+
+      {/* PANEL LATERAL DE VOCABULARIO */}
+      {showVocabularySidebar && (
+        <div 
+          className="position-fixed top-0 end-0 h-100 bg-white shadow-lg p-4 d-flex flex-column" 
+          style={{ width: '440px', maxWidth: '100vw', zIndex: 1050, overflowY: 'auto' }}
+        >
+          <div className="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+            <h5 className="fw-bold text-purple mb-0">
+              <i className="bi bi-translate me-2"></i> B2 Vocabulary
+            </h5>
+            <button onClick={() => setShowVocabularySidebar(false)} className="btn btn-close" aria-label="Close"></button>
+          </div>
+          <div className="flex-grow-1">
+            <VocabularyReferenceContent />
+          </div>
+          <div className="mt-4 pt-3 border-top text-center">
+            <button onClick={() => setShowVocabularySidebar(false)} className="btn btn-purple rounded-pill px-4 py-2 w-100 fw-semibold">
+              Close vocabulary
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showVocabularySidebar && (
+        <div onClick={() => setShowVocabularySidebar(false)} className="position-fixed top-0 start-0 w-100 h-100" style={{ backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 1040 }}></div>
       )}
 
       {/* 3. PANTALLA FINAL CON TABLA DE RÚBRICA ESTILIZADA */}
@@ -287,7 +374,7 @@ export default function WritingActivity({ activityData, onComplete }) {
                 </tbody>
                 <tfoot className="table-light">
                   <tr>
-                    <th className="py-3 px{-4} fs-6 text-dark">TOTAL SCORE</th>
+                    <th className="py-3 px-4 fs-6 text-dark">TOTAL SCORE</th>
                     <th className="text-center fs-6 text-dark">100%</th>
                     <th className="text-end fs-5 text-purple fw-bold">{rubricScores.totalPercentage}%</th>
                   </tr>

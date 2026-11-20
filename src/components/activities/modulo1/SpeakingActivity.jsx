@@ -13,6 +13,7 @@ export default function SpeakingActivity({ activityData, onComplete }) {
 
   // Panel lateral de vocabulario / estructuras
   const [showSidebar, setShowSidebar] = useState(false);
+  const [showVocabularySidebar, setShowVocabularySidebar] = useState(false);
 
   // Iniciar grabación para una oración específica
   const startSentenceRecording = async (sentenceKey) => {
@@ -96,6 +97,45 @@ export default function SpeakingActivity({ activityData, onComplete }) {
     </div>
   );
 
+  // Tabla y contenido de vocabulario
+  const vocabularyItems = [
+    { expression: 'Misleading content', meaning: 'Information that gives a false impression.' },
+    { expression: 'To circulate', meaning: 'To spread or move from person to person.' },
+    { expression: 'To amplify', meaning: 'To increase the reach or impact of something.' },
+    { expression: 'Engagement-driven', meaning: "Influenced by users' online interactions." },
+    { expression: 'To trace the source', meaning: 'To identify where information originated.' },
+    { expression: 'Credibility', meaning: 'The quality of being trustworthy.' },
+    { expression: 'Repost', meaning: 'To share previously published content again.' },
+    { expression: 'Digital literacy', meaning: 'The ability to evaluate digital information.' }
+  ];
+
+  const VocabularyReferenceContent = () => (
+    <div className="d-flex flex-column gap-3">
+      <div className="table-responsive border rounded-3 bg-white">
+        <table className="table table-sm mb-0 align-middle">
+          <thead className="table-light">
+            <tr>
+              <th className="py-2 px-3 small fw-bold text-dark">Expression</th>
+              <th className="py-2 px-3 small fw-bold text-dark">Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            {vocabularyItems.map((item, idx) => (
+              <tr key={idx}>
+                <td className="py-2 px-3 small fw-semibold text-dark">{item.expression}</td>
+                <td className="py-2 px-3 small text-muted">{item.meaning}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="p-3 rounded-3 border bg-light small text-dark" style={{ lineHeight: '1.5' }}>
+        <strong>Extra interactive challenge:</strong> The student listens to short extracts from the audio and selects the vocabulary expression that best completes each one.
+      </div>
+    </div>
+  );
+
   return (
     <div className="card border-0 shadow-sm rounded-4 p-3 p-md-4 p-lg-5 bg-white w-100 position-relative">
       
@@ -134,7 +174,17 @@ export default function SpeakingActivity({ activityData, onComplete }) {
               <span className="badge bg-purple-light text-purple px-3 py-1 rounded-pill fw-bold">Step 1 of 4</span>
               <h3 className="fw-bold text-dark mt-1 mb-0">Learn the Structures</h3>
             </div>
-            <span className="text-muted small">Grammar & Formulas</span>
+            <div className="d-flex align-items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowVocabularySidebar(true)}
+                className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+                style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+              >
+                <i className="bi bi-translate"></i> Vocabulary
+              </button>
+              <span className="text-muted small">Grammar & Formulas</span>
+            </div>
           </div>
 
           <p className="text-muted mb-4">
@@ -164,13 +214,23 @@ export default function SpeakingActivity({ activityData, onComplete }) {
               <span className="badge bg-purple-light text-purple px-3 py-1 rounded-pill fw-bold">Step 2 of 4 (Sentence 1)</span>
               <h3 className="fw-bold text-dark mt-1 mb-0">Expressing Contrast</h3>
             </div>
-            <button
-              onClick={() => setShowSidebar(true)}
-              className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
-              style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
-            >
-              <i className="bi bi-journal-bookmark-fill"></i> Guide
-            </button>
+            <div className="d-flex align-items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowVocabularySidebar(true)}
+                className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+                style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+              >
+                <i className="bi bi-translate"></i> Vocabulary
+              </button>
+              <button
+                onClick={() => setShowSidebar(true)}
+                className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+                style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+              >
+                <i className="bi bi-journal-bookmark-fill"></i> Guide
+              </button>
+            </div>
           </div>
 
           <div className="p-3 rounded-4 bg-light mb-4 border-start border-4" style={{ borderColor: '#6C4AB6' }}>
@@ -250,13 +310,23 @@ export default function SpeakingActivity({ activityData, onComplete }) {
               <span className="badge bg-success-subtle text-success px-3 py-1 rounded-pill fw-bold">Step 3 of 4 (Sentence 2)</span>
               <h3 className="fw-bold text-dark mt-1 mb-0">Expressing Consequences</h3>
             </div>
-            <button
-              onClick={() => setShowSidebar(true)}
-              className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
-              style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
-            >
-              <i className="bi bi-journal-bookmark-fill"></i> Guide
-            </button>
+            <div className="d-flex align-items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowVocabularySidebar(true)}
+                className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+                style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+              >
+                <i className="bi bi-translate"></i> Vocabulary
+              </button>
+              <button
+                onClick={() => setShowSidebar(true)}
+                className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+                style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+              >
+                <i className="bi bi-journal-bookmark-fill"></i> Guide
+              </button>
+            </div>
           </div>
 
           <div className="p-3 rounded-4 bg-light mb-4 border-start border-4 border-success">
@@ -336,13 +406,23 @@ export default function SpeakingActivity({ activityData, onComplete }) {
               <span className="badge bg-warning-subtle text-warning-emphasis px-3 py-1 rounded-pill fw-bold">Step 4 of 4 (Sentence 3)</span>
               <h3 className="fw-bold text-dark mt-1 mb-0">Giving Recommendations</h3>
             </div>
-            <button
-              onClick={() => setShowSidebar(true)}
-              className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
-              style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
-            >
-              <i className="bi bi-journal-bookmark-fill"></i> Guide
-            </button>
+            <div className="d-flex align-items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowVocabularySidebar(true)}
+                className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+                style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+              >
+                <i className="bi bi-translate"></i> Vocabulary
+              </button>
+              <button
+                onClick={() => setShowSidebar(true)}
+                className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+                style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+              >
+                <i className="bi bi-journal-bookmark-fill"></i> Guide
+              </button>
+            </div>
           </div>
 
           <div className="p-3 rounded-4 bg-light mb-4 border-start border-4 border-warning">
@@ -439,6 +519,33 @@ export default function SpeakingActivity({ activityData, onComplete }) {
 
       {showSidebar && (
         <div onClick={() => setShowSidebar(false)} className="position-fixed top-0 start-0 w-100 h-100" style={{ backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 1040 }}></div>
+      )}
+
+      {/* PANEL LATERAL DE VOCABULARIO */}
+      {showVocabularySidebar && (
+        <div 
+          className="position-fixed top-0 end-0 h-100 bg-white shadow-lg p-4 d-flex flex-column" 
+          style={{ width: '440px', maxWidth: '100vw', zIndex: 1050, overflowY: 'auto' }}
+        >
+          <div className="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+            <h5 className="fw-bold text-purple mb-0">
+              <i className="bi bi-translate me-2"></i> B2 Vocabulary
+            </h5>
+            <button onClick={() => setShowVocabularySidebar(false)} className="btn btn-close" aria-label="Close"></button>
+          </div>
+          <div className="flex-grow-1">
+            <VocabularyReferenceContent />
+          </div>
+          <div className="mt-4 pt-3 border-top text-center">
+            <button onClick={() => setShowVocabularySidebar(false)} className="btn btn-purple rounded-pill px-4 py-2 w-100 fw-semibold">
+              Close vocabulary
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showVocabularySidebar && (
+        <div onClick={() => setShowVocabularySidebar(false)} className="position-fixed top-0 start-0 w-100 h-100" style={{ backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 1040 }}></div>
       )}
 
       {/* 6. PANTALLA FINAL DE RESULTADOS */}

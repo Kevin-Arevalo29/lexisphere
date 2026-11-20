@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 export default function SpeakingActivityM2({ activityData, onComplete }) {
   const [step, setStep] = useState('intro'); // 'intro', 'speaking', 'submitted'
+  const [showVocabularySidebar, setShowVocabularySidebar] = useState(false);
   
   // --- TEMPORIZADOR ---
   const [timeLeft, setTimeLeft] = useState(1200); // 20 minutos
@@ -30,6 +31,68 @@ export default function SpeakingActivityM2({ activityData, onComplete }) {
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
+
+  // --- VOCABULARIO DESPLEGABLE (USEFUL VOCABULARY – B1) ---
+  const usefulVocabularyB1 = [
+    {
+      num: 1,
+      term: 'Pollution',
+      definition: 'The presence of harmful substances in the environment.'
+    },
+    {
+      num: 2,
+      term: 'Deforestation',
+      definition: 'The cutting down of trees.'
+    },
+    {
+      num: 3,
+      term: 'Climate change',
+      definition: "Long-term changes in the Earth's climate."
+    },
+    {
+      num: 4,
+      term: 'Renewable energy',
+      definition: 'Energy from natural sources that can be replaced.'
+    },
+    {
+      num: 5,
+      term: 'Reduce waste',
+      definition: 'To produce less rubbish.'
+    },
+    {
+      num: 6,
+      term: 'Protect wildlife',
+      definition: 'To keep animals safe in nature.'
+    },
+    {
+      num: 7,
+      term: 'Save resources',
+      definition: 'To use natural resources carefully.'
+    },
+    {
+      num: 8,
+      term: 'Sustainable lifestyle',
+      definition: 'A way of living that protects the environment.'
+    }
+  ];
+
+  const VocabularyReferenceContent = () => (
+    <div className="d-flex flex-column gap-2">
+      <h6 className="fw-bold text-dark mb-2">Useful Vocabulary – B1</h6>
+      {usefulVocabularyB1.map((item) => (
+        <div
+          key={item.num}
+          className="p-3 rounded-3 border bg-light"
+          style={{ lineHeight: '1.5' }}
+        >
+          <span className="fw-bold text-dark">
+            {item.num}. {item.term}:
+          </span>{' '}
+          <span className="text-dark small">{item.definition}</span>
+        </div>
+      ))}
+    </div>
+  );
 
   // --- LAS 4 PREGUNTAS / PASOS DE SPEAKING ---
   const speakingPrompts = [
@@ -132,9 +195,19 @@ export default function SpeakingActivityM2({ activityData, onComplete }) {
       {/* 1. INTRODUCCIÓN */}
       {step === 'intro' && (
         <div className="mx-auto text-center" style={{ maxWidth: '900px' }}>
-          <span className="badge bg-purple-light text-purple px-3 py-2 rounded-pill fw-bold mb-2">
-            Module 2 - Speaking Mission
-          </span>
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <span className="badge bg-purple-light text-purple px-3 py-2 rounded-pill fw-bold">
+              Module 2 - Speaking Mission
+            </span>
+            <button
+              type="button"
+              onClick={() => setShowVocabularySidebar(true)}
+              className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+              style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+            >
+              <i className="bi bi-translate"></i> Vocabulary
+            </button>
+          </div>
           <h2 className="fw-bold mb-3" style={{ color: '#1E1248' }}>BE AN ECO-EXPERT!</h2>
           <p className="text-muted fs-5 fst-italic mb-4">Television Interview Simulation</p>
 
@@ -143,7 +216,7 @@ export default function SpeakingActivityM2({ activityData, onComplete }) {
               <i className="bi bi-mic-fill me-2"></i> SPEAKING INSTRUCTIONS
             </h5>
             <p className="text-dark fs-6 mb-0" style={{ lineHeight: '1.6' }}>
-              Imagine you are environmental experts participating in a television interview. Record an individual audio response for each of the 4 interview questions below[cite: 15]. You must complete all 4 slots to finish.
+              Imagine you are environmental experts participating in a television interview. Record an individual audio response for each of the 4 interview questions below. You must complete all 4 slots to finish.
             </p>
           </div>
 
@@ -159,12 +232,22 @@ export default function SpeakingActivityM2({ activityData, onComplete }) {
       {/* 2. ZONA DE ENTREVISTA CON 4 CASILLAS DE AUDIO Y BOTÓN DE BORRAR */}
       {step === 'speaking' && (
         <div>
-          <div className="mb-4 pb-3 border-bottom">
-            <span className="badge bg-purple-light text-purple px-3 py-1 rounded-pill fw-bold">
-              Speaking challenge: Be an Eco-Expert![cite: 15]
-            </span>
-            <h4 className="fw-bold text-dark mt-2 mb-0">Record your response for each question</h4>
-            <p className="text-muted small mt-1">If you want to re-record a specific question, click the delete button to clear its slot.</p>
+          <div className="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-4 pb-3 border-bottom">
+            <div>
+              <span className="badge bg-purple-light text-purple px-3 py-1 rounded-pill fw-bold">
+                Speaking challenge: Be an Eco-Expert!
+              </span>
+              <h4 className="fw-bold text-dark mt-2 mb-0">Record your response for each question</h4>
+              <p className="text-muted small mt-1">If you want to re-record a specific question, click the delete button to clear its slot.</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowVocabularySidebar(true)}
+              className="btn btn-outline-purple rounded-pill px-3 py-2 fw-semibold d-flex align-items-center gap-2 shadow-sm"
+              style={{ borderColor: '#6C4AB6', color: '#6C4AB6' }}
+            >
+              <i className="bi bi-translate"></i> Vocabulary
+            </button>
           </div>
 
           <div className="d-flex flex-column gap-4 mb-4">
@@ -243,6 +326,33 @@ export default function SpeakingActivityM2({ activityData, onComplete }) {
             </button>
           </div>
         </div>
+      )}
+
+      {/* PANEL LATERAL DE VOCABULARIO */}
+      {showVocabularySidebar && (
+        <div 
+          className="position-fixed top-0 end-0 h-100 bg-white shadow-lg p-4 d-flex flex-column" 
+          style={{ width: '440px', maxWidth: '100vw', zIndex: 1050, overflowY: 'auto' }}
+        >
+          <div className="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+            <h5 className="fw-bold text-purple mb-0">
+              <i className="bi bi-translate me-2"></i> B1 Vocabulary
+            </h5>
+            <button onClick={() => setShowVocabularySidebar(false)} className="btn btn-close" aria-label="Close"></button>
+          </div>
+          <div className="flex-grow-1">
+            <VocabularyReferenceContent />
+          </div>
+          <div className="mt-4 pt-3 border-top text-center">
+            <button onClick={() => setShowVocabularySidebar(false)} className="btn btn-purple rounded-pill px-4 py-2 w-100 fw-semibold">
+              Close vocabulary
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showVocabularySidebar && (
+        <div onClick={() => setShowVocabularySidebar(false)} className="position-fixed top-0 start-0 w-100 h-100" style={{ backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 1040 }}></div>
       )}
 
       {/* 3. PANTALLA DE ESTADO: PENDIENTE DE CALIFICAR */}

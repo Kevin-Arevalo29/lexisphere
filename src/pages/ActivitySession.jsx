@@ -144,22 +144,6 @@ export default function ActivitySession() {
                   }} 
                 />
               )}
-              {/* Si luego agregas listening, speaking o writing para el Módulo 3, van aquí */}
-              {activityType !== 'reading' && (
-                <div className="card border-0 shadow-sm rounded-4 p-5 bg-white text-center">
-                  <h3 className="fw-bold text-dark">{activity.title}</h3>
-                  <p className="text-muted">{activity.desc}</p>
-                  <button 
-                    onClick={() => {
-                      recordCompletion(100);
-                      setCompleted(true);
-                    }}
-                    className="btn btn-purple rounded-pill px-4 py-2 mt-3 fw-semibold mx-auto"
-                  >
-                    Complete Activity <i className="bi bi-check2 ms-1"></i>
-                  </button>
-                </div>
-              )}
             </>
           ) : isModule2 ? (
             /* --- MÓDULO 2 (ENVIRONMENT) --- */
@@ -244,22 +228,6 @@ export default function ActivitySession() {
                     setCompleted(true);
                   }} 
                 />
-              )}
-
-              {activityType === 'listening' && (
-                <div className="card border-0 shadow-sm rounded-4 p-5 bg-white text-center">
-                  <h3 className="fw-bold text-dark">{activity.title}</h3>
-                  <p className="text-muted">{activity.desc}</p>
-                  <button 
-                    onClick={() => {
-                      recordCompletion(100);
-                      setCompleted(true);
-                    }}
-                    className="btn btn-purple rounded-pill px-4 py-2 mt-3 fw-semibold mx-auto"
-                  >
-                    Complete Activity <i className="bi bi-check2 ms-1"></i>
-                  </button>
-                </div>
               )}
             </>
           )}
